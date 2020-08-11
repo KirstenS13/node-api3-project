@@ -1,12 +1,9 @@
 // code away!
-// 1 - bring in express, routers, and any other imports
 const express = require("express");
+const server = require("./server");
 const userRouter = require("./users/userRouter");
 
-// 2 - create server
-const server = express();
-
-// 3 - add middleware, including routers
+// add middleware
 server.use(express.json());
 server.use(userRouter);
 

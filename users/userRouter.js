@@ -1,4 +1,5 @@
 const express = require('express');
+const userDb = require("./userDb")
 
 const router = express.Router();
 
@@ -15,6 +16,14 @@ router.post('/:id/posts', (req, res) => {
 // Get Users
 router.get('/', (req, res) => {
   // do your magic!
+  userDb.get()
+    .then(users => {
+      res.json(users);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ message: "An error occurred while retrieving the information. Please try again later." })
+    })
 });
 
 // Get User By ID
