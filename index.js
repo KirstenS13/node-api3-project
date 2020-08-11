@@ -5,9 +5,10 @@ const userRouter = require("./users/userRouter");
 
 // add middleware
 server.use(express.json());
-server.use(userRouter);
+// "/users" means that /users will come before each path defined in userRouter ("/:id" is actually "/users/:id")
+server.use("/users" ,userRouter);
 
 // 4 - have server listen
-server.listen(8000, () => {
-    console.log("Server running on http://localhost:8000")
+server.listen(8080, () => {
+    console.log("Server running on http://localhost:8080")
 });
