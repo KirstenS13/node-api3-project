@@ -7,7 +7,7 @@ const router = express.Router();
 // Create User
 router.post('/', validateUser(), (req, res) => {
   // do your magic!
-  userDb.insert(req.body.name)
+  userDb.insert(req.body)
     .then(user => {
       res.status(201).json(user);
     })
@@ -69,6 +69,18 @@ router.delete('/:id', validateUserId(), (req, res) => {
 // Update User
 router.put('/:id', validateUser(), validateUserId(), (req, res) => {
   // do your magic!
+  userDb.update(req.params.id, req.body)
+    .then(response => {
+      if (response === 1) {
+        res.status(200).json({ message: "User successfully updated." });
+      } else {
+        res.status(500).json({ message: "An error occurred while updating user. User not updated." });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ message: "An error occurred while updating user." });
+    });
 });
 
 //custom middleware
