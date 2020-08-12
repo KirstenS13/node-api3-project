@@ -13,9 +13,7 @@ router.post('/', validateUser(), (req, res) => {
     })
     .catch(error => {
       console.log(error);
-      res.status(500).json({
-        message: "An error occurred while creating the user."
-      });
+      res.status(500).json({ message: "Something went wrong, please try again later" });
     });
 });
 
@@ -33,7 +31,7 @@ router.get('/', (req, res) => {
     })
     .catch(error => {
       console.log(error);
-      res.status(500).json({ message: "An error occurred while retrieving the information. Please try again later." })
+      res.status(500).json({ message: "Something went wrong, please try again later" })
     })
 });
 
@@ -57,13 +55,25 @@ router.get('/:id/posts', validateUserId(), (req, res) => {
     })
     .catch(error => {
       console.log(error);
-      res.status(500).json({ message: "An error occurred while retrieving the resource." });
+      res.status(500).json({ message: "Something went wrong, please try again later" });
     });
 });
 
 // Delete User
 router.delete('/:id', validateUserId(), (req, res) => {
   // do your magic!
+  userDb.remove(req.params.id)
+    .then(response => {
+      if (response === 1) {
+        res.status(200).json({ message: "User deleted successfully" });
+      } else {
+        res.status(500).json({ message: "Something went wrong, please try again later" });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ message: "Something went wrong, please try again later" });
+    });
 });
 
 // Update User
@@ -74,12 +84,12 @@ router.put('/:id', validateUser(), validateUserId(), (req, res) => {
       if (response === 1) {
         res.status(200).json({ message: "User successfully updated." });
       } else {
-        res.status(500).json({ message: "An error occurred while updating user. User not updated." });
+        res.status(500).json({ message: "Something went wrong, please try again later" });
       }
     })
     .catch(error => {
       console.log(error);
-      res.status(500).json({ message: "An error occurred while updating user." });
+      res.status(500).json({ message: "Something went wrong, please try again later" });
     });
 });
 
