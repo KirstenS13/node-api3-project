@@ -8,7 +8,7 @@ server.get('/', (req, res) => {
 });
 
 //custom middleware
-// moved code to logger.js
+// moved code to middleware/logger.js
 server.use(logger());
 
 module.exports = server;

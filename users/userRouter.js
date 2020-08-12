@@ -1,5 +1,6 @@
 const express = require('express');
 const userDb = require("./userDb")
+const { validateUserId } = require('../middleware/user');
 
 const router = express.Router();
 
@@ -27,8 +28,10 @@ router.get('/', (req, res) => {
 });
 
 // Get User By ID
-router.get('/:id', (req, res) => {
+router.get('/:id', validateUserId(), (req, res) => {
   // do your magic!
+  // the validateUserId does all the code for this endpoint, so we just send back the response
+  res.status(200).json(req.user);
 });
 
 // Get Posts By User ID
@@ -47,17 +50,7 @@ router.put('/:id', (req, res) => {
 });
 
 //custom middleware
+// moved code to middleware/user.js
 
-function validateUserId(req, res, next) {
-  // do your magic!
-}
-
-function validateUser(req, res, next) {
-  // do your magic!
-}
-
-function validatePost(req, res, next) {
-  // do your magic!
-}
 
 module.exports = router;
