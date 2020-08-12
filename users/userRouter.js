@@ -1,16 +1,26 @@
 const express = require('express');
 const userDb = require("./userDb")
-const { validateUserId } = require('../middleware/user');
+const { validateUserId, validateUser } = require('../middleware/user');
 
 const router = express.Router();
 
 // Create User
-router.post('/', (req, res) => {
+router.post('/', validateUser(), (req, res) => {
   // do your magic!
+  userDb.insert(req.body.name)
+    .then(user => {
+      res.status(201).json(user);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({
+        message: "An error occurred while creating the user."
+      });
+    });
 });
 
 // Create Post
-router.post('/:id/posts', (req, res) => {
+router.post('/:id/posts', validateUserId(), (req, res) => {
   // do your magic!
 });
 
@@ -35,12 +45,12 @@ router.get('/:id', validateUserId(), (req, res) => {
 });
 
 // Get Posts By User ID
-router.get('/:id/posts', (req, res) => {
+router.get('/:id/posts', validateUserId(), (req, res) => {
   // do your magic!
 });
 
 // Delete User
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateUserId(), (req, res) => {
   // do your magic!
 });
 
