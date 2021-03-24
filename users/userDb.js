@@ -7,6 +7,7 @@ module.exports = {
   insert,
   update,
   remove,
+  //insertPost
 };
 
 function get() {
@@ -33,6 +34,16 @@ function insert(user) {
       return getById(ids[0]);
     });
 }
+
+// attempting to add function to create post
+/* function insertPost(id, post) {
+  return db('posts')
+    .where('id', id)
+    .insert(post)
+    .then(ids => {
+      return getById(ids[0]);
+    });
+} */
 
 function update(id, changes) {
   return db('users')
